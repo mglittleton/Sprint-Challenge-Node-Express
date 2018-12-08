@@ -5,7 +5,7 @@
   "repository": "https://github.com/mglittleton/Sprint-Challenge-Node-Express.git",
   "author": "mglittleton <michaelglittleton@gmail.com>",
   "license": "MIT",
-  "script": {
+  "scripts": {
     "start": "nodemon"
   },
   "dependencies": {
