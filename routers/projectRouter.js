@@ -66,15 +66,43 @@ router.post("/", (req, res) => {
 });
 
 // // delete
-// 200 OK
-// 404 ID not found
-// 500 Oops
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  projectDB
+    .remove(id)
+    .then(num => {
+      if (num) {
+        res.json({ message: "project deleted" });
+      } else {
+        res.status(404).json(constants.badID);
+      }
+    })
+    .catch(err => {
+      res.status(500).json(constants.delete500);
+    });
+});
 
 // // update
-// 200 OK
-// 400 Missing info
-// 404 ID not found
-// 500 Oops
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const project = req.body;
+  if (project.name && project.description) {
+    projectDB
+      .update(id, project)
+      .then(project => {
+        if (project) {
+          res.json(project);
+        } else {
+          res.status(404).json(constants.badID);
+        }
+      })
+      .catch(err => {
+        res.status(500).json(constants.put500);
+      });
+  } else {
+    res.status(400).json(constants.projMissingInfo);
+  }
+});
 
 // exports
 module.exports = router;
